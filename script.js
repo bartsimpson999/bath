@@ -1,27 +1,7 @@
-// script.js
-import * as THREE from 'three';
-
-// Create the scene, camera, and renderer
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({
-  canvas: document.getElementById('canvas'),
-  antialias: true
-});
-
-// Create the bat mesh and add it to the scene
-const batMesh = new THREE.Mesh(new THREE.SphereGeometry(1, 32, 32), new THREE.MeshBasicMaterial({ color: 0xffffff }));
-scene.add(batMesh);
-
-// Create the visual range cone
-const coneGeometry = new THREE.ConeGeometry(1, 2, 32);
-const coneMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.5 });
-const coneMesh = new THREE.Mesh(coneGeometry, coneMaterial);
-coneMesh.position.set(0, 0, 2); // position the cone in front of the bat
-scene.add(coneMesh);
+// ...
 
 // Update the bat's position and direction based on user input
-function update() {
+function update(event) {
   // Get the mouse position and direction
   const mousePosition = new THREE.Vector2();
   mousePosition.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -46,18 +26,12 @@ document.addEventListener('keydown', (event) => {
     // Flap wings and ascend
     batMesh.position.y += 0.1;
   }
+  update(event); // Pass the event object to the update function
 });
 
 document.addEventListener('mousemove', (event) => {
   // Update the bat's direction based on mouse movement
-  update();
+  update(event); // Pass the event object to the update function
 });
 
-// Animate the scene
-function animate() {
-  requestAnimationFrame(animate);
-  update();
-  renderer.render(scene, camera);
-}
-
-animate();
+// ...
